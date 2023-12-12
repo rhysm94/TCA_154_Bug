@@ -12,6 +12,7 @@ public struct PasscodeScreen: Reducer {
   }
 
   public enum Action: BindableAction {
+    case didTapProgress
     case delegate(Delegate)
     case binding(BindingAction<State>)
 
@@ -27,6 +28,11 @@ public struct PasscodeScreen: Reducer {
 
     Reduce<State, Action> { state, action in
       switch action {
+      case .didTapProgress:
+        return .run { send in
+          await send(.delegate(.didSetupPasscode))
+        }
+
       case .binding(\.$passcode):
         if state.passcode.caseInsensitiveCompare("open") == .orderedSame {
           return .run { send in
@@ -58,6 +64,10 @@ public struct PasscodeScreenView: View {
 
         TextField("", text: viewStore.$passcode.removeDuplicates(by: ==))
           .textFieldStyle(.roundedBorder)
+
+        Button("Force Progress") {
+          viewStore.send(.didTapProgress)
+        }
       }
     }
   }
