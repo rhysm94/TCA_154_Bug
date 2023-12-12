@@ -6,9 +6,7 @@ public struct PasscodeScreen: Reducer {
   public struct State: Equatable {
     @BindingState public var passcode: String
 
-    public init(
-      passcode: String = ""
-    ) {
+    public init(passcode: String = "") {
       self.passcode = passcode
     }
   }
@@ -31,7 +29,9 @@ public struct PasscodeScreen: Reducer {
       switch action {
       case .binding(\.$passcode):
         if state.passcode.caseInsensitiveCompare("open") == .orderedSame {
-          return .send(.delegate(.didSetupPasscode), animation: .default)
+          return .run { send in
+            await send(.delegate(.didSetupPasscode))
+          }
         }
 
         return .none
