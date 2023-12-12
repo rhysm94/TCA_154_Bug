@@ -94,7 +94,6 @@ public struct PasscodeScreen: Reducer {
         return .none
       }
     }
-    ._printChanges()
   }
 }
 
@@ -112,7 +111,7 @@ public struct PasscodeScreenView: View {
           .font(.callout)
 
         TextField("", text: viewStore.$passcode.removeDuplicates(by: ==))
-          .border(.black)
+          .textFieldStyle(.roundedBorder)
           .disabled(viewStore.textFieldDisabled)
       }
       .transaction { transaction in
