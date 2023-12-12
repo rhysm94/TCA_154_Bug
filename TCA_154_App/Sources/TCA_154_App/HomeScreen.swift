@@ -10,7 +10,7 @@ public struct HomeScreen: Reducer {
 
   public enum Action {
     case passcode(PasscodeScreen.Action)
-    case second(Never)
+    case second(Void)
   }
 
   public init() {}
@@ -29,6 +29,10 @@ public struct HomeScreen: Reducer {
         return .none
 
       case .passcode:
+        return .none
+
+      case .second:
+        state = .passcode(.init())
         return .none
       }
     }
@@ -52,7 +56,12 @@ public struct HomeScreenView: View {
 
       case .second:
         CaseLet(\HomeScreen.State.second, action: HomeScreen.Action.second) { store in
-          Text("Did Set Up Passcode Successfully!")
+          VStack {
+            Text("Did Set Up Passcode Successfully!")
+            Button("Go back") {
+              store.send(())
+            }
+          }
         }
       }
     }
