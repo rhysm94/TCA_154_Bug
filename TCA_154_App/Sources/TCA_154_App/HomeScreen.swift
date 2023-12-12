@@ -49,10 +49,6 @@ public struct HomeScreenView: View {
         CaseLet(\HomeScreen.State.passcode, action: HomeScreen.Action.passcode) { store in
           PasscodeScreenView(store: store)
         }
-//      case .first:
-//        CaseLet(\HomeScreen.State.first, action: HomeScreen.Action.first) { store in
-//          FirstScreenView(store: store)
-//        }
 
       case .second:
         CaseLet(\HomeScreen.State.second, action: HomeScreen.Action.second) { store in
